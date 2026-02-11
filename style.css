@@ -1,0 +1,1031 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    background: linear-gradient(135deg, #0a1929, #0f2d44);
+    color: #e0e0e0;
+    height: 100vh;
+    overflow: hidden;
+    padding: 10px;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    gap: 10px;
+}
+
+/* TOOLBAR COMPACT */
+.toolbar {
+    background: rgba(20, 30, 48, 0.95);
+    padding: 10px 15px;
+    border-radius: 10px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+    border: 1px solid rgba(59, 130, 246, 0.2);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    min-height: 60px;
+    flex-shrink: 0;
+}
+
+.toolbar h1 {
+    color: #00b4d8;
+    font-size: 1.5rem;
+    white-space: nowrap;
+}
+
+.tools {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+}
+
+.tool-btn {
+    background: linear-gradient(145deg, #1e3a8a, #1e40af);
+    color: white;
+    border: none;
+    padding: 8px 15px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    box-shadow: 0 3px 5px rgba(0, 0, 0, 0.2);
+}
+
+.tool-btn:hover {
+    background: linear-gradient(145deg, #1e40af, #1e3a8a);
+    transform: translateY(-1px);
+}
+
+.tool-btn.active {
+    background: linear-gradient(145deg, #3b82f6, #1d4ed8);
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.5);
+}
+
+/* MAIN WORK AREA - Ocupa casi toda la pantalla */
+.main-area {
+    display: flex;
+    flex: 1;
+    min-height: 0; /* Importante para que no desborde */
+    gap: 10px;
+}
+
+.workspace {
+    flex: 4; /* 80% del ancho */
+    background: rgba(15, 23, 42, 0.98);
+    border-radius: 10px;
+    position: relative;
+    overflow: auto;
+    border: 2px solid rgba(59, 130, 246, 0.3);
+    box-shadow: inset 0 0 30px rgba(0, 0, 0, 0.7);
+    min-width: 0; /* Para flexbox */
+}
+
+/* Grid más sutil */
+.grid-overlay {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-image:
+        linear-gradient(rgba(100, 100, 255, 0.05) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(100, 100, 255, 0.05) 1px, transparent 1px);
+    background-size: 40px 40px;
+}
+
+/* PANEL LATERAL COMPACT */
+.info-panel {
+    flex: 1; /* 20% del ancho */
+    background: rgba(20, 30, 48, 0.95);
+    padding: 15px;
+    border-radius: 10px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+    border: 1px solid rgba(59, 130, 246, 0.2);
+    display: flex;
+    flex-direction: column;
+    min-width: 220px;
+    max-width: 280px;
+    overflow-y: auto;
+}
+
+.info-panel h3 {
+    color: #10b981;
+    font-size: 1.1rem;
+    margin-bottom: 12px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid rgba(16, 185, 129, 0.3);
+}
+
+#device-list {
+    list-style: none;
+    flex: 1;
+    overflow-y: auto;
+    margin-bottom: 15px;
+}
+
+#device-list li {
+    background: rgba(30, 41, 59, 0.7);
+    margin: 5px 0;
+    padding: 8px 10px;
+    border-radius: 6px;
+    border-left: 4px solid #3b82f6;
+    font-size: 0.9rem;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+#device-list li i {
+    color: #3b82f6;
+    font-size: 0.9rem;
+}
+
+.stats {
+    background: rgba(15, 23, 42, 0.7);
+    padding: 12px;
+    border-radius: 8px;
+    margin-top: auto;
+}
+
+.stats p {
+    margin: 6px 0;
+    font-size: 0.9rem;
+    display: flex;
+    justify-content: space-between;
+}
+
+.stats span {
+    color: #3b82f6;
+    font-weight: bold;
+}
+
+/* CONSOLA PEQUEÑA EN LA PARTE INFERIOR */
+.console {
+    background: rgba(20, 30, 48, 0.95);
+    border-radius: 10px;
+    padding: 12px 15px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+    border: 1px solid rgba(59, 130, 246, 0.2);
+    flex-shrink: 0;
+    height: 160px; /* Altura fija pequeña */
+    display: flex;
+    flex-direction: column;
+}
+
+.console h3 {
+    color: #f59e0b;
+    font-size: 1.1rem;
+    margin-bottom: 8px;
+}
+
+#console-output {
+    background: rgba(0, 0, 0, 0.4);
+    flex: 1;
+    overflow-y: auto;
+    padding: 8px;
+    border-radius: 6px;
+    font-family: 'Courier New', monospace;
+    font-size: 0.85rem;
+    margin-bottom: 10px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+#console-output p {
+    margin: 4px 0;
+    color: #00ff88;
+}
+
+.input-area {
+    display: flex;
+    gap: 8px;
+}
+
+#command-input {
+    flex: 1;
+    padding: 8px 12px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid #3b82f6;
+    border-radius: 6px;
+    color: white;
+    font-size: 0.9rem;
+    font-family: 'Courier New', monospace;
+}
+
+#command-input:focus {
+    outline: none;
+    border-color: #60a5fa;
+    box-shadow: 0 0 0 2px rgba(96, 165, 250, 0.2);
+}
+
+#send-btn, #clear-btn, #info-btn {
+    background: linear-gradient(145deg, #3b82f6, #2563eb);
+    color: white;
+    border: none;
+    padding: 8px 15px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    font-weight: bold;
+    white-space: nowrap;
+    transition: all 0.2s;
+}
+
+#send-btn:hover, #clear-btn:hover, #info-btn:hover {
+    background: linear-gradient(145deg, #2563eb, #1d4ed8);
+    transform: translateY(-1px);
+}
+
+#clear-btn {
+    background: linear-gradient(145deg, #ef4444, #dc2626);
+}
+
+#clear-btn:hover {
+    background: linear-gradient(145deg, #dc2626, #b91c1c);
+}
+
+#info-btn {
+    background: linear-gradient(145deg, #10b981, #059669);
+}
+
+#info-btn:hover {
+    background: linear-gradient(145deg, #059669, #047857);
+}
+
+/* DISPOSITIVOS - TAMAÑO OPTIMIZADO */
+.device {
+    position: absolute;
+    width: 70px;
+    height: 70px;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    cursor: move;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+    transition: all 0.2s;
+    z-index: 10;
+}
+
+.device:hover {
+    transform: scale(1.05);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.6);
+}
+
+.device.dragging {
+    opacity: 0.8;
+    z-index: 100;
+    cursor: grabbing;
+}
+
+.device.router {
+    background: linear-gradient(145deg, #059669, #047857);
+    border: 2px solid #10b981;
+}
+
+.device.switch {
+    background: linear-gradient(145deg, #0404e2, #0404e2);
+    border: 2px solid #a78bfa;
+}
+
+.device.server {
+    background: linear-gradient(000deg, #000000, #000020);
+    border: 2px solid #7dd3fc;
+}
+
+.device.pc {
+    background: linear-gradient(145deg, #dc2626, #b91c1c);
+    border: 2px solid #f87171;
+}
+
+.device.phone {
+    background: linear-gradient(145deg, #0ea5e9, #0284c7);
+    border: 2px solid #7dd3fc;
+}
+.device.firewall {
+    background: linear-gradient(145deg, #000000, #000000);
+    border: 2px solid #7dd3fc;
+}
+.device.wireles-router {
+    background: linear-gradient(145deg, #0ea5e9, #0284c7);
+    border: 2px solid #7dd3fc;
+}
+.device.laptop {
+    background: linear-gradient(145deg, #0ea5e9, #0284c7);
+    border: 2px solid #7dd3fc;
+}
+.device.internet-cloud {
+    background: linear-gradient(145deg, #0ea5e9, #0284c7);
+    border: 2px solid #7dd3fc;
+}
+
+.device i {
+    font-size: 1.5rem;
+    margin-bottom: 5px;
+    color: white;
+}
+
+.device-label {
+    font-size: 0.75rem;
+    font-weight: bold;
+    text-align: center;
+    max-width: 65px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    color: white;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+}
+
+/* NOTAS FLOTANTES - ESTILOS CORREGIDOS */
+.floating-note {
+    position: absolute;
+    min-width: auto; /* Cambiar a auto */
+    min-height: auto; /* Cambiar a auto */
+    background: transparent !important;
+    border: none !important;
+    border-radius: 0; /* Sin bordes redondeados */
+    padding: 2px 5px; /* Padding mínimo */
+    font-family: 'Courier New', monospace;
+    font-size: 18px; /* Un poco más grande */
+    line-height: 1.4;
+    color: #ffffff !important;
+    caret-color: #ffffff !important;
+    cursor: text; /* Cambiar cursor a texto */
+    z-index: 50;
+    outline: none !important;
+    box-shadow: none !important;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    overflow: visible;
+    resize: none;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 1); /* Sombra para mejor legibilidad */
+    font-weight: bold;
+}
+
+/* Cuando la nota está enfocada (escribiendo) */
+.floating-note:focus {
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+    color: #ffffff; /* Cambiar a cyan cuando está activa */
+    text-shadow: 0 0 5px rgba(255, 255, 255, 0.5);
+}
+
+/* Eliminar el pseudo-elemento ::before que tenía el icono */
+.floating-note::before {
+    content: none !important;
+}
+
+/* Estilo para texto cuando está vacío */
+.floating-note:empty::before {
+    content: 'Escribe aquí...';
+    color: rgba(255, 255, 255, 0.4); /* blanco transparente */
+    font-style: italic;
+}
+
+/* Estilo cuando estás arrastrando la nota */
+.floating-note.dragging {
+    cursor: grabbing;
+    opacity: 0.8;
+    color: #ffffff; /* Amarillo cuando se arrastra */
+}
+/* CONEXIONES */
+.connection {
+    position: absolute;
+    background-color: #00ff88;
+    height: 3px;
+    transform-origin: 0 0;
+    z-index: 5;
+    border-radius: 2px;
+    box-shadow: 0 0 5px rgba(0, 255, 136, 0.5);
+}
+
+/* Botón de notas especial */
+#notes-btn {
+    background: linear-gradient(145deg, #f59e0b, #d97706) !important;
+}
+
+#notes-btn:hover {
+    background: linear-gradient(145deg, #d97706, #b45309) !important;
+}
+
+#notes-btn.active {
+    background: linear-gradient(145deg, #fbbf24, #f59e0b) !important;
+    box-shadow: 0 0 0 3px rgba(251, 191, 36, 0.5) !important;
+    animation: notePulse 2s infinite;
+}
+
+@keyframes notePulse {
+    0% { box-shadow: 0 0 0 0 rgba(251, 191, 36, 0.7); }
+    70% { box-shadow: 0 0 0 10px rgba(251, 191, 36, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(251, 191, 36, 0); }
+}
+
+/* INDICADOR DE CONEXIONES */
+.device::after {
+    content: '';
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: #ef4444;
+    display: none;
+    border: 2px solid rgba(15, 23, 42, 0.9);
+    z-index: 11;
+}
+
+.device.connected::after {
+    display: block;
+    background: #10b981;
+}
+
+/* Dispositivo seleccionado para cable */
+.device.cable-selected {
+    box-shadow: 0 0 0 3px #3b82f6, 0 0 20px rgba(59, 130, 246, 0.5) !important;
+    animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+    0% { box-shadow: 0 0 0 3px #3b82f6, 0 0 20px rgba(59, 130, 246, 0.5); }
+    50% { box-shadow: 0 0 0 5px #3b82f6, 0 0 30px rgba(59, 130, 246, 0.7); }
+    100% { box-shadow: 0 0 0 3px #3b82f6, 0 0 20px rgba(59, 130, 246, 0.5); }
+}
+
+/* MENÚ CONTEXTUAL */
+.context-menu {
+    animation: fadeIn 0.2s ease;
+    backdrop-filter: blur(10px);
+    position: fixed !important;
+    z-index: 1000;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.context-menu-header {
+    padding: 8px 12px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    margin-bottom: 8px;
+    color: #3b82f6;
+    font-size: 0.9rem;
+    font-weight: bold;
+}
+
+.context-menu-item {
+    padding: 8px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: background 0.2s;
+    font-size: 0.9rem;
+    color: #e0e0e0;
+}
+
+.context-menu-item:hover {
+    background: rgba(59, 130, 246, 0.2);
+}
+
+.context-menu-separator {
+    height: 1px;
+    background: rgba(255, 255, 255, 0.1);
+    margin: 5px 0;
+}
+
+/* RESPONSIVE */
+@media (max-width: 1200px) {
+    .info-panel {
+        min-width: 200px;
+        max-width: 240px;
+    }
+
+    .toolbar h1 {
+        font-size: 1.3rem;
+    }
+
+    .tool-btn {
+        padding: 7px 12px;
+        font-size: 0.85rem;
+    }
+}
+
+@media (max-width: 900px) {
+    .main-area {
+        flex-direction: column;
+    }
+
+    .info-panel {
+        max-width: 100%;
+        height: 200px;
+        order: 3;
+    }
+
+    .workspace {
+        order: 1;
+        min-height: 500px;
+    }
+
+    .console {
+        order: 2;
+    }
+
+    .toolbar {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .tools {
+        justify-content: center;
+    }
+
+    .device {
+        width: 60px;
+        height: 60px;
+    }
+
+    .device i {
+        font-size: 1.2rem;
+    }
+
+    .device-label {
+        font-size: 0.7rem;
+    }
+}
+
+@media (max-width: 600px) {
+    .tools {
+        gap: 5px;
+    }
+
+    .tool-btn {
+        padding: 6px 10px;
+        font-size: 0.8rem;
+    }
+
+    .tool-btn i {
+        display: none; /* Ocultar iconos en móviles muy pequeños */
+    }
+
+    .device {
+        width: 55px;
+        height: 55px;
+    }
+}
+
+/* SCROLLBAR PERSONALIZADO */
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: rgba(59, 130, 246, 0.5);
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: rgba(59, 130, 246, 0.8);
+}
+
+/* SCROLLBAR MEJORADO PARA WORKSPACE */
+.workspace::-webkit-scrollbar {
+    width: 12px;
+    height: 12px;
+}
+
+.workspace::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.1);
+    border-radius: 6px;
+    margin: 2px;
+}
+
+.workspace::-webkit-scrollbar-thumb {
+    background: linear-gradient(45deg, #3b82f6, #8b5cf6);
+    border-radius: 6px;
+    border: 3px solid rgba(15, 23, 42, 0.98);
+}
+
+.workspace::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(45deg, #2563eb, #7c3aed);
+}
+
+.workspace::-webkit-scrollbar-corner {
+    background: rgba(15, 23, 42, 0.98);
+}
+
+/* ESTILOS PARA LAS ACCIONES DE BOTONES EN CONSOLA */
+.console-actions {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 10px;
+}
+
+.console-actions button {
+    flex: 1;
+    padding: 8px;
+    font-size: 0.85rem;
+}
+
+/* ESTILO PARA EL INDICADOR DE WORKSPACE SIZE */
+#workspace-size {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    background: rgba(0, 0, 0, 0.5);
+    color: #a5b4fc;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 0.8rem;
+    font-family: monospace;
+    z-index: 20;
+}
+
+/* ESTILOS PARA LOS TIPS DE LA CONSOLA */
+#console-output p.tip {
+    color: #a5b4fc;
+    font-style: italic;
+}
+
+#console-output p.tip::before {
+    content: "💡 ";
+}
+
+/* ESTILOS PARA COMANDOS ESPECÍFICOS EN CONSOLA */
+#console-output p.command {
+    color: #fbbf24;
+    font-weight: bold;
+}
+
+#console-output p.success {
+    color: #10b981;
+}
+
+#console-output p.error {
+    color: #ef4444;
+}
+
+#console-output p.info {
+    color: #3b82f6;
+}
+
+/* ANIMACIÓN PARA NUEVOS DISPOSITIVOS */
+@keyframes devicePop {
+    0% { transform: scale(0); }
+    70% { transform: scale(1.1); }
+    100% { transform: scale(1); }
+}
+
+.device.new {
+    animation: devicePop 0.3s ease-out;
+}
+
+/* ESTILO PARA EL BOTÓN DE NOTAS EN TOOLBAR */
+#notes-btn {
+    background: linear-gradient(145deg, #f59e0b, #d97706);
+    color: white;
+}
+
+#notes-btn:hover {
+    background: linear-gradient(145deg, #d97706, #b45309);
+}
+
+#notes-btn.active {
+    background: linear-gradient(145deg, #fbbf24, #f59e0b);
+    box-shadow: 0 0 0 3px rgba(251, 191, 36, 0.5);
+}
+
+/* ESTILO PARA EL TEXTO DE LAS NOTAS CUANDO ESTÁN VACÍAS */
+.floating-note:empty::before {
+    content: 'Escribe aquí...';
+    color: #999;
+    font-style: italic;
+}
+
+/* ESTILOS PARA MODO OSCURO DE NOTAS (alternativa) */
+.floating-note.dark-mode {
+    background: rgba(30, 41, 59, 0.95);
+    color: #e2e8f0;
+    border-color: #475569;
+}
+
+/* HOVER EFFECT PARA DISPOSITIVOS CON CONEXIONES */
+.device.has-connections:hover::after {
+    transform: scale(1.2);
+    transition: transform 0.2s;
+}
+
+/* ESTILO PARA LAS NOTAS CUANDO SE ARRASTRAN SOBRE DISPOSITIVOS */
+.floating-note.over-device {
+    border-color: #ef4444;
+    box-shadow: 0 0 10px rgba(239, 68, 68, 0.5);
+}
+
+/* GRADIENTE PARA CABLES ACTIVOS */
+.connection.active {
+    background: linear-gradient(90deg, #00ff88, #00e676);
+    box-shadow: 0 0 10px rgba(0, 255, 136, 0.7);
+}
+
+/* ESTILOS PARA EL CONTENEDOR DE BOTONES EN TOOLBAR */
+.toolbar-buttons {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.toolbar-buttons .tool-btn {
+    min-width: 80px;
+    justify-content: center;
+}
+
+/* EFECTO DE BRILLO PARA DISPOSITIVOS IMPORTANTES */
+.device.important {
+    filter: brightness(1.2);
+    box-shadow: 0 0 20px rgba(59, 130, 246, 0.5);
+}
+
+/* ANIMACIÓN DE CARGA PARA EL SISTEMA */
+@keyframes loading {
+    0% { opacity: 0.5; }
+    50% { opacity: 1; }
+    100% { opacity: 0.5; }
+}
+
+.system-loading {
+    animation: loading 1.5s infinite;
+}
+
+/* ESTILOS PARA LAS CONEXIONES ROTAS */
+.connection.broken {
+    background: #ef4444;
+    animation: brokenLine 0.5s infinite alternate;
+}
+
+@keyframes brokenLine {
+    from { opacity: 0.3; }
+    to { opacity: 0.8; }
+}
+
+/* ESTILOS PARA SELECTOR DE MÚLTIPLES DISPOSITIVOS */
+.selection-box {
+    position: absolute;
+    border: 2px dashed #3b82f6;
+    background: rgba(59, 130, 246, 0.1);
+    z-index: 25;
+}
+
+/* ESTILOS PARA DISPOSITIVOS SELECCIONADOS */
+.device.selected {
+    box-shadow: 0 0 0 3px #fbbf24, 0 0 20px rgba(251, 191, 36, 0.5);
+}
+
+/* ESTILOS PARA NOTAS DE ADVERTENCIA */
+.floating-note.warning {
+    background: rgba(255, 193, 7, 0.9);
+    border-color: #ff9800;
+}
+
+.floating-note.warning::before {
+    content: '⚠️';
+}
+
+/* ESTILOS PARA NOTAS DE INFORMACIÓN */
+.floating-note.info-note {
+    background: rgba(33, 150, 243, 0.9);
+    border-color: #2196f3;
+    color: white;
+}
+
+.floating-note.info-note::before {
+    content: 'ℹ️';
+}
+
+/* ESTILO PARA EL TEXTO RESALTADO EN NOTAS */
+.floating-note mark {
+    background-color: rgba(255, 235, 59, 0.5);
+    padding: 0 2px;
+    border-radius: 2px;
+}
+
+/* EFECTO DE SOMBRA PARA NOTAS PROFUNDAS */
+.floating-note.deep-shadow {
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+}
+
+/* ESTILOS PARA NOTAS CON LISTAS */
+.floating-note ul,
+.floating-note ol {
+    margin-left: 15px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+.floating-note li {
+    margin-bottom: 3px;
+}
+
+/* ESTILOS PARA CÓDIGO EN NOTAS */
+.floating-note code {
+    background: rgba(0, 0, 0, 0.2);
+    padding: 1px 4px;
+    border-radius: 3px;
+    font-family: 'Courier New', monospace;
+    font-size: 0.9em;
+}
+
+/* ESTILO PARA ENLACES EN NOTAS */
+.floating-note a {
+    color: #3b82f6;
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+.floating-note a:hover {
+    color: #2563eb;
+}
+
+/* ESTILOS PARA NOTAS CON CABECERA */
+.floating-note.with-header {
+    padding-top: 25px;
+}
+
+.floating-note.with-header::after {
+    content: attr(data-title);
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    background: rgba(59, 130, 246, 0.8);
+    color: white;
+    padding: 5px 10px;
+    font-weight: bold;
+    font-size: 0.9em;
+    border-radius: 5px 5px 0 0;
+}
+
+/* ANIMACIÓN DE APARICIÓN PARA NOTAS */
+@keyframes noteAppear {
+    from {
+        opacity: 0;
+        transform: scale(0.8) translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
+}
+
+.floating-note.new-note {
+    animation: noteAppear 0.3s ease-out;
+}
+
+/* ESTILOS PARA NOTAS CON BORDES REDONDEADOS DIFERENTES */
+.floating-note.rounded {
+    border-radius: 15px;
+}
+
+.floating-note.sharp {
+    border-radius: 0;
+}
+
+/* ESTILOS PARA NOTAS TRANSPARENTES */
+.floating-note.transparent {
+    background: rgba(255, 255, 255, 0.7);
+    backdrop-filter: blur(5px);
+}
+
+/* ESTILO PARA NOTAS CON FONDO DE GRADIENTE */
+.floating-note.gradient-bg {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border: none;
+}
+
+/* ESTILOS PARA NOTAS CON SOMBRA DE TEXTO */
+.floating-note.text-shadow {
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+}
+
+/* ESTILO PARA NOTAS QUE SON CHECKLISTS */
+.floating-note.checklist li {
+    list-style-type: none;
+    padding-left: 20px;
+    position: relative;
+}
+
+.floating-note.checklist li::before {
+    content: '☐';
+    position: absolute;
+    left: 0;
+}
+
+.floating-note.checklist li.checked::before {
+    content: '☑';
+    color: #10b981;
+}
+
+/* ESTILOS PARA NOTAS CON BADGES */
+.floating-note .badge {
+    position: absolute;
+    top: -8px;
+    right: -8px;
+    background: #ef4444;
+    color: white;
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    font-size: 0.7em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+}
+
+/* ESTILO PARA NOTAS CON ICONO FLOTANTE */
+.floating-note.with-icon {
+    padding-left: 40px;
+}
+
+.floating-note.with-icon::before {
+    content: attr(data-icon);
+    position: absolute;
+    left: 10px;
+    top: 10px;
+    font-size: 20px;
+    opacity: 0.5;
+}
+
+/* ESTILOS PARA NOTAS CON IMÁGENES (si se implementan) */
+.floating-note.with-image {
+    padding: 0;
+    overflow: hidden;
+}
+
+.floating-note.with-image img {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+.floating-note.with-image .note-content {
+    padding: 10px;
+    background: rgba(0, 0, 0, 0.5);
+    color: white;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+}
+
+/* ESTILOS RESPONSIVE PARA NOTAS */
+@media (max-width: 768px) {
+    .floating-note {
+        min-width: 120px;
+        min-height: 35px;
+        font-size: 12px;
+        padding: 8px;
+    }
+}
+
+@media (max-width: 480px) {
+    .floating-note {
+        min-width: 100px;
+        min-height: 30px;
+        font-size: 11px;
+        padding: 6px;
+    }
+}
+
+/* ESTILO PARA NOTAS CON ANCLAJE ESPECIAL */
+.floating-note.anchored {
+    cursor: default;
+}
+
+.floating-note.anchored:hover {
+    cursor: default;
+    transform: none;
+}
+
+/* ESTILOS PARA SISTEMA DE ZOOM (si se implementa) */
+.zoomed .floating-note {
+    transform-origin: 0 0;
+}
